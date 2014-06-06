@@ -2221,9 +2221,7 @@ static int exec_lua_string(lua_State *L, const char *luacode) {
 	return r==0;
 }
 
-
-/* main program  */
-int main(int argc, char ** argv)
+lua_State *chdkptp_init(int argc, char ** argv)
 {
 	g_argc = argc;
 	g_argv = argv;
@@ -2234,9 +2232,15 @@ int main(int argc, char ** argv)
 	luaL_openlibs(L);
 	luaopen_lfs(L);
 	luaopen_lbuf(L);
-	luaopen_rawimg(L);	
+	luaopen_rawimg(L);
 	chdkptp_registerlibs(L);
-	exec_lua_string(L,"require('main')");
+
+	/* success */
+	return L;
+}
+
+int chdkptp_exit(lua_State *L)
+{
 	uninit_gui_libs(L);
 	lua_close(L);
 	// gc takes care of any open connections
@@ -2244,6 +2248,20 @@ int main(int argc, char ** argv)
 #ifdef CHDKPTP_PTPIP
 	sockutil_cleanup();
 #endif
+
+	/* success */
+	return 0;
+}
+
+/* main program  */
+int main(int argc, char ** argv)
+{
+	lua_State *L = chdkptp_init(argc, argv);
+
+	exec_lua_string(L,"require('main')");
+
+	chdkptp_exit(L);
+
 	return 0;
 }
 
