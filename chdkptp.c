@@ -2253,15 +2253,55 @@ int chdkptp_exit(lua_State *L)
 	return 0;
 }
 
+#if 0
 /* main program  */
 int main(int argc, char ** argv)
 {
 	lua_State *L = chdkptp_init(argc, argv);
 
-	exec_lua_string(L,"require('main')");
+	exec_lua_string(L,"package.path = package.path .. ';/home/aspotashev/work/rt00049-canon-a1400/chdkptp/lua/?.lua'");
+//	exec_lua_string(L,"require('main')");
+
+	exec_lua_string(L,"util = require('util')");
+	exec_lua_string(L,"util:import()");
+	exec_lua_string(L,"chdku = require('chdku')");
+	exec_lua_string(L,"prefs = require('prefs')");
+	exec_lua_string(L,"cli = require('cli')");
+
+	// Are these optional?
+	exec_lua_string(L,"ustime = require('ustime')");
+	exec_lua_string(L,"errutil = require('errutil')");
+	exec_lua_string(L,"con=chdku.connection()");
+
+	exec_lua_string(L,"mc=require('multicam')");
+
+	int top = lua_gettop(L);
+	luaL_loadstring(L, "return 3, 4, 5");
+	int R = lua_pcall(L, 0, LUA_MULTRET, 0);
+	int nresults = lua_gettop(L) - top;
+
+	exec_lua_string(L,"cli:run()");
+
+/*
+util=require'util'
+util:import()
+errutil=require'errutil'
+ustime=require'ustime'
+fsutil=require'fsutil'
+prefs=require'prefs'
+chdku=require'chdku'
+cli=require'cli'
+exp=require'exposure'
+dng=require'dng'
+dngcli=require'dngcli'
+*/
+
+// con=chdku.connection()
+// dngcli.init_cli()
 
 	chdkptp_exit(L);
 
 	return 0;
 }
+#endif // 0
 

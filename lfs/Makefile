@@ -4,6 +4,7 @@ ifdef LUA_INCLUDE_DIR
 INC_PATHS+=-I$(LUA_INCLUDE_DIR)
 endif
 CFLAGS+=$(INC_PATHS)
+CFLAGS+=-fPIC
 SRCS=lfs.c
 OBJS=$(SRCS:.c=.o)
 all: $(OBJS)
