@@ -104,7 +104,7 @@ ifneq ($(OSTYPE),Windows)
 LINK_LIBS+=m dl
 endif
 
-INC_PATHS+=-I$(CHDK_SRC_DIR)
+INC_PATHS+=-I$(CHDK_SRC_DIR) -I/usr/include/lua5.2
 
 CFLAGS+=$(INC_PATHS) -DCHDKPTP_BUILD_NUM=$(SVNREV) -DCHDKPTP_REL_DESC="\"alpha\""
 
