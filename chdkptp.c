@@ -22,7 +22,7 @@
 #if defined(WIN32) && defined(CHDKPTP_PTPIP)
 #define WINVER 0x0502
 #endif
-
+#define LUA_COMPAT_MODULE
 #include "config.h"
 #include "ptp.h"
 #include <errno.h>
