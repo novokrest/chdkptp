@@ -2004,6 +2004,23 @@ return false,'already in play'
 			return rstatus,rerr
 		end,
 	},
+		{
+		names={'shootremote'},
+		help='shoot after disconenct from usb (switch released)',
+		func=function(self,args) 
+			local rstatus,rerr = con:execwait([[
+while 1 do
+  wait_click(1)
+  if is_key("remote") then 
+    shoot()
+    return
+  end
+end
+]])
+			cli:mode_change()
+			return rstatus,rerr
+		end,
+	},
 }
 
 

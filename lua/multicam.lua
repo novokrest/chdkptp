@@ -255,16 +255,6 @@ wait until all cameras have returned a status message for 'cmd' or timed out
 ]]
 
 function print_table(table)
-  for k, v in ipairs(table) do
-    print(k)
-    if type(v) == 'table' then
-      print('AAAAAAAAAAAC')
-      print_table(v)
-    else
-      print('BBBB')
-      print(v)
-    end
-  end
 end
 
 
@@ -347,7 +337,9 @@ function mc:cmd(cmd,opts)
 		if opts.syncat then
 			sendcmd = string.format('%s %d',cmd,self:get_sync_tick(lcon,tstart,opts.syncat))
 		end
+		print('AAA')
 		local status,err = lcon:write_msg_pcall(sendcmd)
+		print('BB')
 		printf('%s:%s\n',lcon.mc_id,sendcmd)
 		if not status then
 			warnf('%s: send %s cmd failed: %s\n',lcon.mc_id,tostring(sendcmd),tostring(err))
@@ -567,6 +559,17 @@ function mc.run(opts)
 			end
 		end
 	until mc.done
+end
+
+function cmds.shootremote()
+  while 1 do
+    wait_click(1)
+    if is_key("remote") then
+      shoot()
+      mc.done = true
+      return
+    end
+  end
 end
 ]]})
 end
