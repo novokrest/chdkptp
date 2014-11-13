@@ -337,9 +337,7 @@ function mc:cmd(cmd,opts)
 		if opts.syncat then
 			sendcmd = string.format('%s %d',cmd,self:get_sync_tick(lcon,tstart,opts.syncat))
 		end
-		print('AAA')
 		local status,err = lcon:write_msg_pcall(sendcmd)
-		print('BB')
 		printf('%s:%s\n',lcon.mc_id,sendcmd)
 		if not status then
 			warnf('%s: send %s cmd failed: %s\n',lcon.mc_id,tostring(sendcmd),tostring(err))
