@@ -566,6 +566,7 @@ function cmds.shootremote()
       shoot()
       cmds.play()
       mc.done = true
+      cmds.exit()
       return
     end
   end
